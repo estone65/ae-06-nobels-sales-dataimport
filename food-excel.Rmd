@@ -18,35 +18,39 @@ library(readxl)
 * Read in the Excel file called `favourite-food.xlsx` from the `data-raw/` folder.
 
 ```{r label-me1, eval=FALSE}
-fav_food <- read_excel(___)
+fav_food <- read_excel ("data-raw/favourite-food.xlsx")
 fav_food
 ```
 
 * Clean up `NA`s and make sure you're happy with variable types.
 
 ```{r label-me2, eval=FALSE}
-fav_food <- read_excel(___, ___)
-fav_food 
+fav_food_cleaned <- read_excel ("data-raw/favourite-food.xlsx", 
+        na = c("N/A", "99999"))
+fav_food_cleaned
+
 ```
 
 * Convert SES (socio economic status) to a factor variables with levels in the 
 following order: `Low`, `Middle`, `High`.
 
 ```{r label-me3}
-# add code here
+fav_food_cleaned_ses <- fav_food_cleaned %>%
+  mutate(SES = fct_relevel(SES, "Low", "Middle", "High"))
 ```
 
 * Write out the resulting data frame to `favourite-food.csv` in the `data/` folder.
 
 ```{r label-me4}
-# add code here
+write_csv(fav_food_cleaned_ses, file = "data-raw/favourite-food.csv")
 ```
 
 * Finally, read `favourite-food.csv` back in from the `data/` folder and 
 observe the variable types. Are they as you left them?
 
 ```{r label-me5}
-# add code here
+fav_food_new <- read.csv ("data-raw/favourite-food.csv")
+str (fav_food_new)
 ```
 
 ## Exercise 2
@@ -76,7 +80,8 @@ following order: `Low`, `Middle`, `High`.
 variable types. Are they as you left them?
 
 ```{r label-me9}
-# add code here
+fav_food_new <- read.csv ("data-raw/favourite-food.csv")
+str (fav_food_new)
 ```
 
 ## References {#references}
